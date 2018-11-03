@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2018 by anonymous (http://jsbin.com/mamahivoyi/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+
+<script id="jsbin-javascript">
+function is_blocked(column, index)
+{
+  if (index == column.length){
+    return 0;
+  }
+  if (column[index+1] == 1){
+    return 1;
+  }
+  return is_blocked(column,index+1);
+}
+function blocked_at(column, index)
+{
+  if (index == column.length){
+    return 0;
+  }
+  if (column[index+1] == 1){
+    return index+1;
+  }
+  return blocked_at(column,index+1);
+}
+
+function move_to(from,to,other,index,is_real)
+{
+  var flag = 0;
+  var from_blocked = is_blocked(from,index);
+  var fblock = blocked_at(from,index);
+  var to_blocked = is_blocked(to,index);
+  var tblock = blocked_at(to,index);
+  
+  if(from_blocked){
+    move_to(from,other,to,fblock,1);
+    flag = 1;
+  }
+  if(to_blocked){
+    move_to(to,other,from,tblock,1);
+    flag = 1;
+  }
+  if(flag == 1)
+    move_to(from,to,other,index,0);
+  
+  if(is_real){
+    from[index]--;
+    to[index]++;
+    console.log(tower1.toString());
+    console.log(tower2.toString());
+    console.log(tower3.toString());
+    console.log(" ");
+  }
+  return;
+}
+
+var length = 5;
+var tower1 = new Array(length);
+var tower2 = new Array(length);
+var tower3 = new Array(length);
+
+for(i=0;i < length;i++){
+  tower1[i]=1;
+  tower2[i]=0;
+  tower3[i]=0;
+}
+
+console.log(tower1.toString());
+console.log(tower2.toString());
+console.log(tower3.toString());
+console.log(" ");
+
+move_to(tower1,tower2,tower3,-1,0);
+/*
+console.log(tower1.toString());
+console.log(tower2.toString());
+console.log(tower3.toString());
+console.log(" ");*/
+</script>
+</body>
+</html>
